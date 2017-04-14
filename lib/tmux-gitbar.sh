@@ -41,6 +41,9 @@ STASHED_FMT="#[fg=blue,bold]"
 UNTRACKED_FMT="#[fg=magenta,bold]"
 RESET_FMT="#[fg=default]"
 
+# Delimiter between symbol and numeric value
+SYMBOL_DELIMITER_FMT=" "
+
 TMGB_OUTREPO_STATUS=""
 TMGB_OUTREPO_STYLE=""
 
@@ -136,11 +139,11 @@ do_interpolation() {
 
   # Create the git flags components
   clean_flag=$(chk_gitvar 'clean' '-eq 1' "${CLEAN_FMT}${CLEAN_SYMBOL}${RESET_FMT} ")
-  staged=$(chk_gitvar 'staged' '-ne 0' "${STAGED_FMT}${STAGED_SYMBOL} ${git_num_staged}${RESET_FMT} ")
-  conflicts=$(chk_gitvar 'conflicts' '-ne 0' "${CONFLICTS_FMT}${CONFLICT_SYMBOL} ${git_num_conflicts}${RESET_FMT} ")
-  changed=$(chk_gitvar 'changed' '-ne 0' "${CHANGED_FMT}${CHANGED_SYMBOL} ${git_num_changed}${RESET_FMT} ")
-  stashed=$(chk_gitvar 'stashed' '-ne 0' "${STASHED_FMT}${STASHED_SYMBOL} ${git_num_stashed}${RESET_FMT} ")
-  untracked=$(chk_gitvar 'untracked' '-ne 0' "${UNTRACKED_FMT}${UNTRACKED_SYMBOL} ${git_num_untracked}${RESET_FMT} ")
+  staged=$(chk_gitvar 'staged' '-ne 0' "${STAGED_FMT}${STAGED_SYMBOL}${SYMBOL_DELIMITER_FMT}${git_num_staged}${RESET_FMT} ")
+  conflicts=$(chk_gitvar 'conflicts' '-ne 0' "${CONFLICTS_FMT}${CONFLICT_SYMBOL}${SYMBOL_DELIMITER_FMT}${git_num_conflicts}${RESET_FMT} ")
+  changed=$(chk_gitvar 'changed' '-ne 0' "${CHANGED_FMT}${CHANGED_SYMBOL}${SYMBOL_DELIMITER_FMT}${git_num_changed}${RESET_FMT} ")
+  stashed=$(chk_gitvar 'stashed' '-ne 0' "${STASHED_FMT}${STASHED_SYMBOL}${SYMBOL_DELIMITER_FMT}${git_num_stashed}${RESET_FMT} ")
+  untracked=$(chk_gitvar 'untracked' '-ne 0' "${UNTRACKED_FMT}${UNTRACKED_SYMBOL}${SYMBOL_DELIMITER_FMT}${git_num_untracked}${RESET_FMT} ")
   dirty_flags=$(chk_gitvar 'clean' '-eq 0' "${staged}${conflicts}${changed}${stashed}${untracked} ")
 
   flags="| ${clean_flag}${dirty_flags}"
